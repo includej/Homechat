@@ -11,6 +11,7 @@
 /*
 struct for received messages
 */
+
 struct messagesRecv{
     char from[userData];
     char message[messageLength];
