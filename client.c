@@ -153,10 +153,39 @@ g
         {
             printf("\nInvalid Option...\n");
             sleep(1);
-            
+
         }
         system("clear");
     }
+
+    while(choice!=3)
+    {
+        system("clear");
+        printf("\n----HC----Welcome to HOME----HC----\n");
+        printf("(4) Send a private message to User\n");
+        printf("(5) Check your Inbox\n");
+        printf("(6) Registered User Online in Server\n");
+        printf("(7) Exit\n");
+
+        scanf("%d", &choice);
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     close();
     pthread_exit(NULL);
