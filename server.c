@@ -30,10 +30,8 @@ int userCounter = 0; //counter to keep track of number of users
 /*
 Function for Reading Database
 */
-
 void readDatabase(){
-
-    FILE *fp = fopen("db.txt", "r");
+    FILE *fp = fopen("db.txt", "r"); //read
 
     if(fp==NULL){
         printf("Error opening DB file \n");
@@ -43,13 +41,37 @@ void readDatabase(){
     while(fscanf(fp, "%s %s", users[userCounter].username, users[userCounter].password)!=-1)
     {
         
+        //initialize usr
         users[userCounter].recvCounter = 0;
         users[userCounter].sentCounter = 0;
         userCounter++;
 
     }
-
     fclose(fp);
+}
+
+void addUserToDB(struct User tmp)
+{
+    FILE *fp=fopen("db.txt", "a");  //append
+
+    if(fp == NULL){
+        printf("Error opening DB File\n");
+    }
+
+    strcpy(users[userCounter].username, tmp.username);
+    printf("Username: %s\n", users[userCounter].username);
+    strcpy(users[userCounter].password, tmp.password);
+    printf("Pwd: %s\n", users[userCounter].password, tmp.password);
+
+    //print on DB usr and pwd
+    fprintf(fp, "%s %s\n", users[userCounter].username, users[userCounter].password);
+    
+
+    //initializing usr
+    users[userCounter].recvCounter = 0;
+    users[userCounter].sentCounter = 0;
+    userCounter++;                          //increment the counter 
+
 }
 
 
