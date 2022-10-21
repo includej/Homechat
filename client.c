@@ -169,7 +169,45 @@ g
 
         scanf("%d", &choice);
 
+        //Send message choice
+        if(choice==4){
+            send(sockfd, &choice, sizeof(choice), 0); //sending user choice to server [4]
+            struct messageSent tmp; //message to be sent to user
+            prepareMessage(&tmp);
+            send(sockfd, &tmp, sizeof(tmp),0); //sending user message to dest
 
+            /* receiving the response of the server */
+            int ret=0;
+            recv(sockfd, &ret, sizeof(ret), 0); 
+            if(res>=0){
+                //if response >= 0 MESSAGE SENT
+                printf("\nMessage sent to user...\n");
+            }
+            else
+            {
+                printf("\n User not found in the database...\n");
+            }
+            sleep(2);
+
+        }
+        
+        /*Received message choice*/
+        else if (choice==5){
+
+        }
+    
+        /*Online user choice*/
+        else if(choice==6){
+
+        }
+
+        /*Exit choice*/
+        else if(choice==7){
+            send(sockfd, &choice, 
+        }
+        else{
+
+        }
 
     }
 
