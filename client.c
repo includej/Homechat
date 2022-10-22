@@ -11,7 +11,6 @@ Sockets libraries
 #include <sys/socket.h>
 #include <arpa/inet.h> 
 #include <unistd.h>
-#include <netinet/in.h> //INETADDSTRLEN
 
 /*
 Threads libraries
@@ -31,7 +30,7 @@ Client side user signUp
 void signUp(struct User *user)
 {
     printf("Enter username: ");
-    scanf("%s", user->username);
+    scanf("%s", user->userName);
     printf("Enter password: ");
     scanf("%s", user->password);
 }
@@ -43,7 +42,7 @@ Client side user login
 void login(struct User *user)
 {
     printf("Enter username: ");
-    scanf("%s", user->username);
+    scanf("%s", user->userName);
     printf("Enter password: ");
     scanf("%s", user->password);
 }
@@ -66,7 +65,7 @@ void clienthread(int client_r){
     /*Initializing socket*/
     int client_request = client_r;
     int sockfd;
-g
+
     char *ip = "127.0.0.1";
 
     /*Creating socket*/
@@ -88,15 +87,14 @@ g
                             sizeof(server_address));
 
     if(connection_status<0){
-        printf("Connection with the server failed");
-        exit(0);
+        puts("Error\n");
+        return;
     }
-    else
-        /*Connection Established Here*/
-        printf("Connected to the server...\n");
+    
+    /* Connection established here */
+    printf("Connection established\n");
 
-
-    int choice=0;
+    int choice=1;
 
     system("clear");
 
@@ -179,7 +177,7 @@ g
             /* receiving the response of the server */
             int ret=0;
             recv(sockfd, &ret, sizeof(ret), 0); 
-            if(res>=0){
+            if(ret>=0){
                 //if response >= 0 MESSAGE SENT
                 printf("\nMessage sent to user...\n");
             }
@@ -193,17 +191,51 @@ g
         
         /*Received message choice*/
         else if (choice==5){
+            send(sockfd, &choice, sizeof(choice), 0); //sending user choice to server [5]
 
+            /* receiving inbox count of user recCounter*/
+            int rec=0;
+            recv(sockfd, &rec, sizeof(rec),0);
+            printf("\n----------Total messages: %d----------\n\n", rec);
+
+            /*receiving till all the message from user inbox is not fetched */
+            for(int i = 0; i < rec; i++)
+            {
+                struct messagesRecv fr;
+                recv(sockfd,&fr,sizeof(fr),0);
+                printf("[%s]:%s\n", fr.from, fr.message);
+
+            }
+
+            printf("\n----Press any key to return back to Home----\n%c", getchar());
+            getchar();
         }
     
         /*Online user choice*/
-        else if(choice==6){
+        else if(choice==6)
+        {
+            send(sockfd, &choice, sizeof(choice), 0); //sending user choice to server [6]    
+            int rec=0;
+            recv(sockfd, &rec, sizeof(rec), 0);
+            printf("\n----------Online user available: %d----------\n\n", rec);
+            for(int i = 0; i < rec; i++){
+                struct User fr;
+                recv(sockfd, &fr, sizeof(fr),0);
+                printf("User: %s\n", fr.userName);
+            }
+
+            printf("\n----Press any key to return back to Home----\n%c", getchar());
+            getchar();
 
         }
 
         /*Exit choice*/
         else if(choice==7){
-            send(sockfd, &choice, 
+            send(sockfd, &choice, sizeof(choice), 0); //sending user choice to server [7]
+            /*Exiting client*/
+            printf("\n Good bye User\n");
+            sleep(1);
+            break;
         }
         else{
 
@@ -211,21 +243,8 @@ g
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    close();
+    /*Closing connection*/
+    close(sockfd);
     pthread_exit(NULL);
 }
 
