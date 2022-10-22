@@ -1,10 +1,10 @@
 #include <netinet/in.h> //INETADDSTRLEN
 #pragma once
 
-#define messageLength 300
+#define messageLength 100
 #define userData 30
-#define sendLength 300
-#define pwd 20
+#define sendLength 100
+
 
 //DATA STRUCTURES
 
@@ -29,8 +29,8 @@ struct messageSent{
 struct for User
 */
 struct User{
-    char username[userData];
-    char password[pwd];
+    char userName[userData];
+    char password[userData];
     struct messagesRecv recv[sendLength];
     struct messageSent sent[messageLength];
     int recvCounter;
