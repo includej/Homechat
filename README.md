@@ -9,7 +9,9 @@ User will have multiple choices at the beginning:
 1) SignUp 
 2) Login 
 3) Exit
+
 After the user has logged  in he can choose between:
+
 4) Send a new message to a dest
 5) Check messages in the inbox
 6) Check who is online at that precise moment
