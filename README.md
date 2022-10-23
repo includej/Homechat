@@ -36,3 +36,13 @@ signUp | get registration info of the user
 login | get login info of the user
 prepareMessage | set info of a prepared message [dest]:[message] 
 
+## Data structures
+
+*common.h*
+
+**Data structure** | **Info**
+-- | --
+messageRecv | received messages handling
+messageSent | sent messages handling
+User | user info
+
