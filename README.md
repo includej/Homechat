@@ -4,6 +4,9 @@
 
 HomeChat is a simple **private chat**;
 Basically *text messages* are exchanged between two or more hosts. 
+There are two different version:
+- TCP  
+- UDP
 
 User will have multiple choices at the beginning:
 1) SignUp 
